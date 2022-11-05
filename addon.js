@@ -27,12 +27,11 @@ const builder = new addonBuilder(manifest);
 builder.defineCatalogHandler(async () => {
   return new Promise(async (resolve, reject) => {
     HLTV.getMatches().then(async (matches) => {
+      const inLive = matches.filter((val) => val.live === true);
       const metas = await Promise.all(
-        matches.map(async (match) => {
-          if (match.team1 && match.team2 && match.event) {
-            const meta = await getMeta(match.id);
-            return meta;
-          }
+        inLive.map(async (match) => {
+          const meta = await getMeta(match.id);
+          return meta;
         })
       );
       resolve({ metas });
