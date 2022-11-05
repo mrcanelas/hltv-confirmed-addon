@@ -27,11 +27,12 @@ const builder = new addonBuilder(manifest);
 builder.defineCatalogHandler(async () => {
   return new Promise(async (resolve, reject) => {
     HLTV.getMatches().then(async (matches) => {
-      const inLive = matches.filter((val) => val.live === true);
       const metas = await Promise.all(
-        inLive.map(async (match) => {
-          const meta = await getMeta(match.id);
-          return meta
+        matches.map(async (match) => {
+          if (match.team1 && match.team2 && match.event) {
+            const meta = await getMeta(match.id);
+            return meta;
+          }
         })
       );
       resolve({ metas });
@@ -40,11 +41,11 @@ builder.defineCatalogHandler(async () => {
 });
 
 builder.defineMetaHandler(async ({ id }) => {
-  const matchId = id.split(":")[1]
+  const matchId = id.split(":")[1];
   const meta = await cacheWrapMeta(matchId, async () => {
     return await getMeta(matchId);
   });
-  return Promise.resolve({meta});
+  return Promise.resolve({ meta });
 });
 
 builder.defineStreamHandler(({ id }) => {
