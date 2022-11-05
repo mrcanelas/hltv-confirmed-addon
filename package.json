@@ -13,6 +13,7 @@
 		"cloudinary": "^1.32.0",
 		"hltv": "^3.4.1",
 		"jsdom": "^20.0.1",
+		"node-schedule": "^2.1.0",
 		"streamifier": "^0.1.1",
 		"stremio-addon-sdk": "1.1.x",
 		"twitch-m3u8": "^1.1.4"
