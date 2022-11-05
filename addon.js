@@ -6,7 +6,7 @@ const { cacheWrapMeta } = require("./cache");
 
 const manifest = {
   id: "community.HLTV",
-  version: "0.0.1",
+  version: "0.0.2",
   catalogs: [
     {
       type: "tv",
@@ -30,9 +30,7 @@ builder.defineCatalogHandler(async () => {
       const inLive = matches.filter((val) => val.live === true);
       const metas = await Promise.all(
         inLive.map(async (match) => {
-          const meta = await cacheWrapMeta(match.id, async () => {
-            return await getMeta(match.id);
-          });
+          const meta = await getMeta(match.id);
           return meta
         })
       );

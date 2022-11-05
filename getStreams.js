@@ -43,6 +43,7 @@ async function getVideos(matchId) {
           videos.push({
             id: parseTiwtch(url),
             title: name + " | " + parseFlag(country),
+            thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parseTiwtch(url)}-1920x1080.jpg`
           });
         });
         resolve(videos);
