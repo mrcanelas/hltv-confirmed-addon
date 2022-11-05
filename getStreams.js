@@ -14,7 +14,7 @@ function parseFlag(country) {
 }
 
 function parseTiwtch(url) {
-  if (url.includes("www.twitch.tv")) {
+  if (url && url.includes("www.twitch.tv")) {
     return url.split("/")[3];
   } else {
     return undefined;
@@ -39,11 +39,14 @@ async function getVideos(matchId) {
           const country = item.querySelector("img").getAttribute("title");
           const url = item.parentElement.querySelector(
             "div.external-stream > a"
-          ).href;
+          );
+          const id = url ? url.href : null;
           videos.push({
-            id: parseTiwtch(url),
+            id: parseTiwtch(id),
             title: name + " | " + parseFlag(country),
-            thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parseTiwtch(url)}-1920x1080.jpg`
+            thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parseTiwtch(
+              id
+            )}-1920x1080.jpg`,
           });
         });
         resolve(videos);
