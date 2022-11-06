@@ -41,13 +41,15 @@ async function getVideos(matchId) {
             "div.external-stream > a"
           );
           const id = url ? url.href : null;
-          videos.push({
-            id: parseTiwtch(id),
-            title: name + " | " + parseFlag(country),
-            thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parseTiwtch(
-              id
-            )}-1920x1080.jpg`,
-          });
+          if (id) {
+            videos.push({
+              id: parseTiwtch(id),
+              title: name + " | " + parseFlag(country),
+              thumbnail: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${parseTiwtch(
+                id
+              )}-1920x1080.jpg`,
+            });
+          }
         });
         resolve(videos);
       })

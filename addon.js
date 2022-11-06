@@ -30,7 +30,9 @@ builder.defineCatalogHandler(async () => {
       const inLive = matches.filter((val) => val.live === true);
       const metas = await Promise.all(
         inLive.map(async (match) => {
-          const meta = await getMeta(match.id);
+          const meta = await cacheWrapMeta(match.id, async () => {
+            return await getMeta(match.id);
+          });
           return meta;
         })
       );
